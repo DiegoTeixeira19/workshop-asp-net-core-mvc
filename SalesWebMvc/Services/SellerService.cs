@@ -10,7 +10,6 @@ namespace SalesWebMvc.Services
 {
     public class SellerService
     {
-
         private readonly SalesWebMvcContext _context;
 
         public SellerService(SalesWebMvcContext context)
@@ -25,7 +24,6 @@ namespace SalesWebMvc.Services
 
         public async Task InsertAsync(Seller obj)
         {
-            //obj.Department = _context.Department.First();
             _context.Add(obj);
             await _context.SaveChangesAsync();
         }
@@ -43,9 +41,9 @@ namespace SalesWebMvc.Services
                 _context.Seller.Remove(obj);
                 await _context.SaveChangesAsync();
             }
-            catch (DbConcurrencyException e)
+            catch (DbUpdateException e)
             {
-                throw new IntegrityException(e.Message);
+                throw new IntegrityException("Can't delete seller because he/she has sales");
             }
         }
 
@@ -61,7 +59,7 @@ namespace SalesWebMvc.Services
                 _context.Update(obj);
                 await _context.SaveChangesAsync();
             }
-            catch(DbUpdateConcurrencyException e)
+            catch (DbUpdateConcurrencyException e)
             {
                 throw new DbConcurrencyException(e.Message);
             }

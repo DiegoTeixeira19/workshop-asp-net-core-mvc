@@ -1,9 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
-using SalesWebMvc.Models;
-using System;
+﻿using SalesWebMvc.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace SalesWebMvc.Services
 {
@@ -20,13 +19,5 @@ namespace SalesWebMvc.Services
         {
             return await _context.Department.OrderBy(x => x.Name).ToListAsync();
         }
-
-        public void Insert(Seller obj)
-        {
-            obj.Department = _context.Department.First();
-            _context.Add(obj);
-            _context.SaveChanges();
-        }
-
     }
 }
